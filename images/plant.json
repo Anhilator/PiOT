@@ -1,0 +1,6 @@
+{
+  "items": [
+    {"Location": "Indoor", "Plant_Name": "Monstera", "Humidity": "47%", "Exposure": "22%", "Temperature": "21°"},
+    {"Location": "Garden", "Plant_Name": "Pomodorini", "Humidity": "22%", "Exposure": "66%", "Temperature": "26°"}
+  ]
+}

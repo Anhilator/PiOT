@@ -1,0 +1,1 @@
+Location: indoor, Plant_Name: Monstera, Humidity: 47%, Exposure: 22%, Temperature: 21
