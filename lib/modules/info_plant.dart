@@ -28,7 +28,7 @@ class _PlantInfoState extends State<PlantInfo> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Confirmation'),
-          content: Text("Are you sure you want to delete" + widget.plant.name + " ?"),
+          content: Text("Are you sure you want to delete " + widget.plant.name + " ?"),
           actions: [
             TextButton(
               onPressed: () {
@@ -76,22 +76,7 @@ class _PlantInfoState extends State<PlantInfo> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          InkWell(
-                            child: SizedBox(
-                              width: getProportionateScreenWidth(50),
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.asset("images/clock.jpg"),
-                              ),
-                            ),
-                            onTap: (){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => WateringPage(plant: widget.plant),
-                                  ));
-                            },
-                          ),
+
                           SizedBox(width: 15,),
                           InkWell(
                             child: SizedBox(

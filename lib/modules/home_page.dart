@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:piot/modules/NewWatering.dart';
 import 'info_plant.dart';
 import 'new_plant.dart';
 import 'package:path_provider/path_provider.dart';
@@ -143,8 +144,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                     children: <Widget>[
                       Image.asset("images/piot4.png", scale: 10,),
                       SizedBox(width: getProportionateScreenWidth(150),),
-                      InkWell(child: Icon(Icons.refresh), onTap: (){},),
-                      Icon(Icons.menu, size: 20,),
+
+
+                      Column(
+                        children: [
+                          SizedBox(height: 5,),
+                          InkWell(
+                              child: SizedBox(
+                                width: getProportionateScreenWidth(60),
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Image.asset("images/clock.png"),
+                                ),
+                              ),
+                              onTap: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => NewWateringPage(plants: _plants,),));
+                              },
+                            ),
+                          Text("Reminder")
+                        ],
+                      )
                     ],
                   ),
                 ),

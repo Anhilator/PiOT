@@ -19,13 +19,17 @@ class _NewPlantState extends State<NewPlant> {
   String? imagePath;
   String? _plantName;
   String? _plantPosition;
+  String? _plant;
   bool _isButtonEnabled = true;
   bool _isSaveButtonEnabled = true;
   bool _isSynchronized = false;
+  String? plantImage;
+  bool plantPicked = false;
 
 
 
   final List<String> _positions = ['Outdoor', 'Indoor', 'Garden', 'Varanda'];
+  final List<String> _plants= ['Rosemary', 'Lavender', 'Sage', 'Thyme', 'Oregano', 'Basil', 'Mint', 'Orchidea', 'Rose'];
 
 
   Future<void> _pickImageFromGallery() async {
@@ -35,6 +39,7 @@ class _NewPlantState extends State<NewPlant> {
     if (pickedImage != null) {
       setState(() {
         _selectedImage = File(pickedImage.path);
+        plantPicked = false;
       });
     }
   }
@@ -47,6 +52,7 @@ class _NewPlantState extends State<NewPlant> {
       setState(() {
         _selectedImage = File(pickedImage.path);
         imagePath = pickedImage.path;
+        plantPicked = false;
       });
     }
   }
@@ -116,7 +122,7 @@ class _NewPlantState extends State<NewPlant> {
             borderRadius: BorderRadius.circular(10),
           ),
           child: _selectedImage == null
-              ? Icon(Icons.add_a_photo, size: 50, color: Colors.grey[400])
+              ? plantPicked ? Image.asset("images/" + plantImage!):Icon(Icons.add_a_photo, size: 50, color: Colors.grey[400])
               : Image.file(_selectedImage!, fit: BoxFit.cover),
         ),
         SizedBox(height: 16),
@@ -161,6 +167,7 @@ class _NewPlantState extends State<NewPlant> {
       onChanged: (newValue) {
         setState(() {
           _plantPosition = newValue;
+
         });
       },
       items: _positions.map<DropdownMenuItem<String>>((String value) {
@@ -176,6 +183,31 @@ class _NewPlantState extends State<NewPlant> {
     );
   }
 
+  Widget _buildPlantDropdown() {
+    return DropdownButtonFormField<String>(
+      value: _plant,
+      onChanged: (newValue) {
+        setState(() {
+          _plant = newValue;
+          if(newValue != "" || newValue != null){
+            plantImage = newValue! + ".jpg";
+            plantPicked = true;
+          }
+        });
+      },
+      items: _plants.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      decoration: InputDecoration(
+        labelText: 'Plant Species',
+        border: OutlineInputBorder(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -183,7 +215,7 @@ class _NewPlantState extends State<NewPlant> {
         title: Text('Add New Plant'),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.only(left: 16, right: 16, bottom: 5, top: 5),
         child: ListView(
           children: [
             _buildImagePicker(),
@@ -199,6 +231,8 @@ class _NewPlantState extends State<NewPlant> {
             SizedBox(height: 16),
             _buildPositionDropdown(),
             SizedBox(height: 16),
+            _buildPlantDropdown(),
+            SizedBox(height: 10),
             ElevatedButton(
               onPressed: _isButtonEnabled ? _synchronize : null,
               style: ButtonStyle(
